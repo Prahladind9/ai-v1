@@ -13,15 +13,8 @@ public class ChatController {
 
     private final ChatClient chatClient;
 
-    public ChatController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder
-                .defaultSystem("""
-                        You are an internal Java Spring Boot/AI developer advocate assistant.
-                        Your role is to help teammates analyze, design and implement solutions using Spring framework.
-                        If a user asks for help with anything outside these topics, respond politely and
-                        kindly inform them that you are able to assist with Tech tasks within your defined scope.
-                        """)
-                .build();
+    public ChatController(ChatClient  chatClient) {
+        this.chatClient = chatClient;
     }
 
     @GetMapping("/chat")

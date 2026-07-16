@@ -14,17 +14,31 @@ public class ChatController {
     private final ChatClient chatClient;
 
     public ChatController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+        this.chatClient = chatClientBuilder
+                .defaultSystem("""
+                        You are an internal Java Spring Boot/AI developer advocate assistant.
+                        Your role is to help teammates analyze, design and implement solutions using Spring framework.
+                        If a user asks for help with anything outside these topics, respond politely and
+                        kindly inform them that you are able to assist with Tech tasks within your defined scope.
+                        """)
+                .build();
     }
 
     @GetMapping("/chat")
     public String chat(@RequestParam("message") String message){
         return chatClient.prompt(message)
+                .call().content();
+    }
+
+    @GetMapping("/chat/hr")
+    public String chatIT(@RequestParam("message") String message){
+        return chatClient.prompt(message)
                 .system("""
-                        You are an internal Java Spring Boot/AI developer advocate assistant.
-                        Your role is to help teammates analyze, design and implement solutions using Spring framework.
+                        You are HR internal assistant.
+                        Your role is to help employees with questions related to HR policies,
+                        such as leave policies, working hours, benefits and code of conduct.
                         If a user asks for help with anything outside these topics,
-                        kindly inform them that you can only assist with queries related to Java technologies.
+                        kindly inform that you can respond queries related to HR policies.
                         """)
                 .call().content();
     }

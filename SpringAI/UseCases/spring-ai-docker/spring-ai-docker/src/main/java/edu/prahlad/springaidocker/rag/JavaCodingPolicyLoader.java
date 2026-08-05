@@ -4,6 +4,7 @@ package edu.prahlad.springaidocker.rag;
 import jakarta.annotation.PostConstruct;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -23,9 +24,11 @@ public class JavaCodingPolicyLoader {
     Resource javaCodingPolicyFile;
 
     @PostConstruct
-    public void loadPDF(){
+    public void loadPDF() {
         TikaDocumentReader reader = new TikaDocumentReader(javaCodingPolicyFile);
         List<Document> docs = reader.get();
-        vectorStore.add(docs);
+
+        TokenTextSplitter textSplitter = TokenTextSplitter.builder().withChunkSize(100).withMaxNumChunks(400).build();
+        vectorStore.add(textSplitter.split(docs));
     }
 }

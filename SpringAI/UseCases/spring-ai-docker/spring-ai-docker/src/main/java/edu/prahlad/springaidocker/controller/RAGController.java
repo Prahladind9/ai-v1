@@ -35,4 +35,10 @@ public class RAGController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("pdf/chat")
+    public ResponseEntity<String> pdfChat(@RequestParam("message") String message) {
+        String result = ragService.pdfChat(message, promptTemplate);
+        return ResponseEntity.ok(result);
+    }
+
 }

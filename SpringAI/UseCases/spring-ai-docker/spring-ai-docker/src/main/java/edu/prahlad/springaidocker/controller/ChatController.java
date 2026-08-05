@@ -1,4 +1,4 @@
-package edu.prahlad.springaidocker;
+package edu.prahlad.springaidocker.controller;
 
 
 import org.springframework.ai.chat.client.ChatClient;

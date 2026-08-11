@@ -1,4 +1,4 @@
-package edu.prahlad.springaidocker;
+package edu.prahlad.springaidocker.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;
